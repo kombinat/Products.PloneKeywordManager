@@ -4,7 +4,8 @@ Changelog
 2.2.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Remove multilingual check
+  [petschki]
 
 
 2.2.1 (2018-07-09)

@@ -12,17 +12,6 @@ except ImportError:
     import difflib
     USE_LEVENSHTEIN = False
 
-# multiligual detection
-try:
-    pkg_resources.get_distribution('plone.app.multilingual')
-    MULTILINGUAL = True
-except pkg_resources.DistributionNotFound:
-    try:
-        pkg_resources.get_distribution('Products.LinguaPlone')
-        MULTILINGUAL = True
-    except pkg_resources.DistributionNotFound:
-        MULTILINGUAL = False
-
 # Zope imports
 try:
     from App.class_init import InitializeClass
@@ -91,9 +80,6 @@ class PloneKeywordManager(UniqueObject, SimpleItem):
         if context is not None:
             query['path'] = '/'.join(context.getPhysicalPath())
 
-        if MULTILINGUAL and indexName != 'Language':
-            query['Language'] = 'all'
-
         new_keyword = new_keyword.decode('utf8') if isinstance(new_keyword, str) else new_keyword
         try:
             querySet = self._query(**query)
@@ -143,8 +129,6 @@ class PloneKeywordManager(UniqueObject, SimpleItem):
         query = {indexName: keywords}
         if context is not None:
             query['path'] = '/'.join(context.getPhysicalPath())
-        if MULTILINGUAL:
-            query['Language'] = 'all'
         querySet = self._query(**query)
 
         for item in querySet:
